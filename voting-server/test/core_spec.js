@@ -132,6 +132,14 @@ describe('application logic', () => {
       );
     });
 
+    it("doesn't create a tally for entry currently not included in vote.pair", () => {
+      const state = fromJS({
+        pair: ['Trainspotting', '28 Days Later']
+      });
+      const nextState = vote(state, 'Fargo');
+      expect(nextState).to.equal(state);
+    });
+
     it('adds to existing tally for the voted entry', () => {
       const state = Map({
         pair: List.of('Trainspotting', '28 Days Later'),
