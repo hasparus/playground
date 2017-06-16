@@ -36,6 +36,7 @@
     "classnames": "^2.2.5",
     "immutable": "^3.8.1",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "react-addons-test-utils": "^15.6.0",
+    "react-dom": "^15.6.1"
   }
 }

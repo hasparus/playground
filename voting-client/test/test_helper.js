@@ -1,17 +1,23 @@
-import jsdom from 'jsdom';
+const { JSDOM } = require('jsdom');
+
 import chai from 'chai';
 import chaiImmutable from 'chai-immutable';
 
-const doc = jsdom.jsdom('<!doctype html><html><body></body></html>');
-const win = doc.defaultView;
+const { window } = new JSDOM('<!doctype html><html><body></body></html>');;
 
-global.document = doc;
-global.window = win;
+global.window = window;
+global.document = window.document;
+global.navigator = {
+  userAgent: 'node.js'
+};
 
-for (let key in window) {
-  if (!(key in global)) {
-    global[key] = window[key];
-  }
+function copyProps(src, target) {
+  const props = Object.getOwnPropertyNames(src)
+    .filter(prop => typeof target[prop] === 'undefined')
+    .map(prop => Object.getOwnPropertyDescriptor(src, prop));
+  Object.defineProperties(target, props);
 }
+
+copyProps(window, global);
 
 chai.use(chaiImmutable);
