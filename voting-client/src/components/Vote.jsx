@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Vote extends React.Component {
+class Vote extends React.PureComponent {
   getPair() {
     return this.props.pair || [];
   }
@@ -10,7 +10,6 @@ class Vote extends React.Component {
   }
 
   hasVotedFor(entry) {
-    console.log(entry === this.props.hasVoted);
     return this.props.hasVoted === entry;
   }
 
@@ -18,7 +17,9 @@ class Vote extends React.Component {
     return (
       <div className="vote">
         {this.getPair().map(entry => (
-          <button key={entry} onClick={() => this.props.vote(entry)}>
+          <button key={entry}
+                  disabled={this.isDisabled()} 
+                  onClick={() => this.props.vote(entry)}>
             <h1>{entry}</h1>
             {this.hasVotedFor(entry)
               ? <div className="label">Voted</div>
