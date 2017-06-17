@@ -8,14 +8,4 @@ const store = createStore(
     window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-store.dispatch({
-  type: 'SET_STATE',
-  state: {
-    vote: {
-      pair: ['Sunshine', 'Moonlight'],
-      tally: { Sunshine: 2 }
-    }
-  }
-});
-
 export default store;
