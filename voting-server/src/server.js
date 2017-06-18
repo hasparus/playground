@@ -3,12 +3,19 @@ import Server from 'socket.io';
 export default function startServer(store) {
   const io = new Server().attach(8090);
 
+  const _getState = store.getState;
+  store.getState = (...params) => {
+    const state = _getState(...params);
+    console.log("\n<> <> Sending state", state.toJS());
+    return state;
+  };
+
   store.subscribe(() => io.emit('state', store.getState().toJS()));
 
   io.on('connection', socket => {
     socket.emit('state', store.getState().toJS());
-    socket.on('action', store.dispatch.bind(store))
- });
+    socket.on('action', store.dispatch.bind(store));
+  });
 }
 
 /*
